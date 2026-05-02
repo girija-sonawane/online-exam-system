@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Exam</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="navbar">Smart Online Exam System</div>
+  <div class="main-layout">
+
+  <div class="sidebar">
+    <p>Q1</p>
+    <p>Q2</p>
+    <p>Q3</p>
+    <p>Q4</p>
+    <p>Q5</p>
+  </div>
+<div class="container">
+  <h2>Online Exam</h2>
+
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
+<h3 id="timer">Time Left: 60s</h3>
+  <div class="question-box">
+  <p><b>1. What does CPU stand for?</b></p>
+  <input type="radio" name="q1" value="A"> Central Processing Unit<br>
+  <input type="radio" name="q1" value="B"> Computer Personal Unit<br>
+  <input type="radio" name="q1" value="C"> Central Program Unit<br>
+  <input type="radio" name="q1" value="D"> Control Processing Unit<br>
+</div>
+
+<div class="question-box">
+  <p><b>2. Which language is used for system programming?</b></p>
+  <input type="radio" name="q2" value="A"> HTML<br>
+  <input type="radio" name="q2" value="B"> C++<br>
+  <input type="radio" name="q2" value="C"> CSS<br>
+  <input type="radio" name="q2" value="D"> JavaScript<br>
+</div>
+
+<div class="question-box">
+  <p><b>3. Which symbol is used for comments in C++?</b></p>
+  <input type="radio" name="q3" value="A"> // <br>
+  <input type="radio" name="q3" value="B"> ## <br>
+  <input type="radio" name="q3" value="C"> <!-- --> <br>
+  <input type="radio" name="q3" value="D"> ** <br>
+</div>
+
+<div class="question-box">
+  <p><b>4. What is the correct extension of C++ file?</b></p>
+  <input type="radio" name="q4" value="A"> .java<br>
+  <input type="radio" name="q4" value="B"> .cpp<br>
+  <input type="radio" name="q4" value="C"> .html<br>
+  <input type="radio" name="q4" value="D"> .py<br>
+</div>
+
+<div class="question-box">
+  <p><b>5. Which of the following is an input device?</b></p>
+  <input type="radio" name="q5" value="A"> Monitor<br>
+  <input type="radio" name="q5" value="B"> Printer<br>
+  <input type="radio" name="q5" value="C"> Keyboard<br>
+  <input type="radio" name="q5" value="D"> Speaker<br>
+</div>
+
+<button onclick="submitExam()">Submit</button>
+
+</div>
+<script>
+let timeLeft = 60;
+let totalTime = 60;
+
+let timer = setInterval(function() {
+
+  timeLeft--;
+
+  let timerText = document.getElementById("timer");
+  let progressBar = document.getElementById("progress-bar");
+
+  // Timer text
+  timerText.innerText = "Time Left: " + timeLeft + "s";
+
+  // ✅ SAFE CHECK (important)
+  if (progressBar) {
+    let percentage = (timeLeft / totalTime) * 100;
+    progressBar.style.width = percentage + "%";
+  }
+
+  // Last 5 sec warning
+  if (timeLeft <= 5) {
+    timerText.style.color = "red";
+    if (progressBar) progressBar.style.background = "red";
+  }
+
+  // Time up
+  if (timeLeft <= 0) {
+    clearInterval(timer);
+    submitExam();
+  }
+
+}, 1000);
+
+// 🚫 Tab switch warning
+document.addEventListener("visibilitychange", function() {
+  if (document.hidden) {
+    alert("Warning: You switched tabs! ⚠️");
+    submitExam();
+  }
+});
+
+
+function submitExam() {
+  let score = 0;
+
+  let q1 = document.querySelector('input[name="q1"]:checked');
+  let q2 = document.querySelector('input[name="q2"]:checked');
+  let q3 = document.querySelector('input[name="q3"]:checked');
+  let q4 = document.querySelector('input[name="q4"]:checked');
+  let q5 = document.querySelector('input[name="q5"]:checked');
+
+  if (q1 && q1.value === "A") score++; // CPU
+  if (q2 && q2.value === "B") score++; // C++
+  if (q3 && q3.value === "A") score++; // //
+  if (q4 && q4.value === "B") score++; // .cpp
+  if (q5 && q5.value === "C") score++; // Keyboard
+
+  window.location.href = "result.html?score=" + score;
+}
+// 🔥 ADD THIS AT VERY END
+document.querySelectorAll(".sidebar p").forEach((item, index) => {
+  item.addEventListener("click", () => {
+    document.querySelectorAll(".question-box")[index]
+      .scrollIntoView({ behavior: "smooth" });
+  });
+});
+</script>
+</body>
+</html>
