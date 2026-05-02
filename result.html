@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Result</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="navbar">Smart Online Exam System</div>
+
+<div class="container">
+  <h2>Your Result</h2>
+  <h3 id="result"></h3>
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const score = parseInt(params.get("score"));
+
+  let resultText = document.getElementById("result");
+
+  if (score >= 3) {
+    resultText.innerHTML = "Your Score: " + score + "/5 <br> <span style='color:green;'>Pass ✅</span>";
+  } else {
+    resultText.innerHTML = "Your Score: " + score + "/5 <br> <span style='color:red;'>Fail ❌</span>";
+  }
+</script>
+
+</body>
+</html>
